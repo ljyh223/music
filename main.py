@@ -102,12 +102,11 @@ class MusicDownload:
         with open("./conf.json",'r',encoding='utf-8') as f:
             conf = json.load(f)
             self.playlist_save_path=conf['music_path']
-            self.cookie_path=conf['cookie_path']
             self.music_info_path=f"{conf['music_path']}{playlist_id}.json"
 
     def download(self):
         # Download the music from the given URL
-        with open(self.cookie_path,'r') as f:
+        with open("./cookie.txt",'r') as f:
             cookie=f.read().strip()
         if cookie == '':
             print('请先设置cookie')
