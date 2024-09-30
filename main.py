@@ -157,9 +157,9 @@ class MusicDownload:
             self.save(music)
             match music['file_type']:
                 case 'mp3':
-                    self.mp3_mated(music)
+                    self.mp3_mated(music,True)
                 case 'flac':
-                    self.flac_mated(music)
+                    self.flac_mated(music,True)
 
     def check(self):
         print('开始检查')
@@ -232,7 +232,7 @@ class MusicDownload:
         else:
             return lyric
 
-    def mp3_mated(self,music):
+    def mp3_mated(self,music,on_lyric=False):
         # 打开一个 MP3 文件，读取或创建 ID3 标签
         
         path=os.path.join(self.music_save_path, f"{music['name']}.{music['file_type']}")
@@ -258,18 +258,20 @@ class MusicDownload:
 
 
         # 嵌入歌词
-        # lyrics = self.get_lyrics(music['id'])
-        # audio['USLT']=USLT(
-        #         encoding=3,    # 3是utf-8
-        #         lang="eng",    # 歌词的语言
-        #         desc="Lyrics",
-        #         text=lyrics)
-        
+
+        if on_lyric:
+            lyrics = self.get_lyrics(music['id'])
+            audio['USLT']=USLT(
+                    encoding=3,    # 3是utf-8
+                    lang="eng",    # 歌词的语言
+                    desc="Lyrics",
+                    text=lyrics)
+            
 
         # 保存更改
         audio.save(v2_version=3)
 
-    def flac_mated(self, music):
+    def flac_mated(self, music,on_lyric=False):
         # 打开 FLAC 文件
         path=os.path.join(self.music_save_path,f"{music['name']}.{music['file_type']}")
         audio = FLAC(path)
@@ -294,7 +296,8 @@ class MusicDownload:
         audio.add_picture(picture)  # 添加封面图片
 
         # 嵌入歌词
-        # audio['LYRICS']=self.get_lyrics(music['id'])
+        if on_lyric:
+            audio['LYRICS']=self.get_lyrics(music['id'])
 
         audio.save()
 
