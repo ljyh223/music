@@ -393,7 +393,9 @@ class MusicDownload:
 
 
 if __name__ == '__main__':
-    if len(sys.argv)==2:
+    print(len(sys.argv))
+    print(sys.argv)
+    if len(sys.argv)==3:
         pid=sys.argv[2]
         m=MusicDownload(pid)
         m.get_song_list()
