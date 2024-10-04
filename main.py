@@ -403,11 +403,11 @@ if __name__ == '__main__':
         m=MusicDownload(pid)
         m.get_song_list()
         match sys.argv[1]:
-            case 'check':
+            case 'c':
                 m.check()
-            case 'download':
+            case 'd':
                 m.download()
-            case 'repair':
+            case 'r':
                 m.repair()
     else:
         m=MusicDownload('')
